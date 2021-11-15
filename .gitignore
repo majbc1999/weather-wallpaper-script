@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Api key secrets, ...
+secrets.py
+photos/
