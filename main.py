@@ -1,3 +1,7 @@
+# settings
+path_to_photos = ""
+api_key = ""
+
 # wait for computer to get internet connection
 import time
 time.sleep(30)
@@ -23,7 +27,7 @@ else: totd = 'night'
 
 # api call
 from requests import get
-from secrets import api_key
+#from secrets import api_key
 response = get('https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=' + api_key)
 if response.status_code == 200:
    data = response.json()
@@ -34,9 +38,9 @@ else:
 # weather extraction
 if report == 800: weather = 'clear'
 elif report > 800: weather = 'cloudy'
-elif report > 600: weather = 'snowwy'
+elif report > 600: weather = 'snowy'
 else: weather = 'rainy'
 
 # set background
 import ctypes
-ctypes.windll.user32.SystemParametersInfoW(20, 0, 'C:/Users/majbc/OneDrive/Dokumenti/weather-background-script/photos/'+ season + '/' +  totd + '/' + weather + '.jpg' , 0)
+ctypes.windll.user32.SystemParametersInfoW(20, 0, path_to_photos + season + '/' +  totd + '/' + weather + '.jpg' , 0)
