@@ -128,7 +128,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-# Api key secrets, ...
+# Api key, personal photos, exe ...
 secrets.py
 photos/
 weather_background.py
