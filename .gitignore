@@ -131,3 +131,6 @@ dmypy.json
 # Api key secrets, ...
 secrets.py
 photos/
+weather_background.py
+weather_background.exe
+ikona.ico
