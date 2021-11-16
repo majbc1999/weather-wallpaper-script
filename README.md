@@ -2,7 +2,7 @@
 A python script that changes your computer's desktop background based on current weather and time of the day. The weather is obtained from `https://openweathermap.org/` API.
 
 ## Steps
-1. Register to `https://openweathermap.org/` for free and generate your free API key. The default one should look something like: `93aa1ae52d8df6151ee049fid863a3q0`. Then copy paste your API key to the `api_key ` variable.
+1. Register to `https://openweathermap.org/` for free and generate your free API key. The default one should look something like: `93aa1ae52d8df6151ee049fid863a3q0`. Then copy paste your API key to the `api_key` variable.
 2. Save the photos you want for each weather and time of the day in any folder you want (just make sure to remember absolute path to your map and save it to `path_to_photos` variable). Make sure that photos have names: `thunderstorm.jpg` if the weather is thunderstorms, `rain.jpg` for rainy weather, `snow.jpg` if it snows, `fog.jpg` for foggy weather, `clear.jpg` for clear sky, `clear_night.jpg` for clear sky at night and `clouds.jpg` for cloudy weather.
 3. Convert `main.py` file to `main.exe` file and put it in your StartUp folder that the program will run everytime you start your computer:
     - [converting from `.py` to `.exe` using `auto-py-to-exe` tool](https://pypi.org/project/auto-py-to-exe/)
