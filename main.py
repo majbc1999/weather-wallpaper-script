@@ -4,43 +4,63 @@ api_key = ""
 
 # wait for computer to get internet connection
 import time
-time.sleep(30)
 
 # get your location
 import geocoder
-g = list(geocoder.ip('me').latlng)
+start = time.time()
+def get_location():
+   gc = geocoder.ip('me').latlng
+   if gc != None:
+      return(list(geocoder.ip('me').latlng))
+   else:
+      end = time.time()
+      if end - start > 300:
+      # if after 5 minutes we stil cannot reach the api, the weather is set to clear
+         return([46.0, 14.5])
+      else:
+         time.sleep(29)
+         return(get_location())
+g = get_location()
 lat, lon = str(g[0]), str(g[1])
 
-# gets current date and time
+# get current time
 from datetime import datetime
-time = str(datetime.now())
-month = time[5:7]
-hour = int(time[11:13])
+now = str(datetime.now())
+hour = int(now[11:13])
 
-# extracts season and time of the day
-if month == '01' or month == '12' or month == '02': season = 'winter'
-elif month == '03' or month == '04' or month == '05': season = 'spring'
-elif month == '06' or month == '07' or month == '08': season = 'summer'
-else: season = 'autumn'
+# extracts time of the day
 if hour > 6 and hour < 18: totd = 'day'
 else: totd = 'night'
 
 # api call
-from requests import get
-#from secrets import api_key
-response = get('https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=' + api_key)
-if response.status_code == 200:
-   data = response.json()
-   report = data['weather'][0].get('id') # dictionary with current weather data
-else:
-   report = 800
+import requests
+start = time.time()
+def return_api():
+   try:
+      response = requests.get('https://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&appid=' + api_key)
+      if response.status_code == 200:
+         data = response.json()
+         return(data['weather'][0].get('id'))
+   except:
+      # in case weather api is unreachable, we try again in 30 seconds
+      end = time.time()
+      if end - start > 180:
+         # if after 3 minutes we stil cannot reach the api, the weather is set to clear
+         return(800)
+      else:
+         time.sleep(29)
+         return(return_api())
+report = return_api()
 
 # weather extraction
-if report == 800: weather = 'clear'
-elif report > 800: weather = 'cloudy'
-elif report > 600: weather = 'snowy'
-else: weather = 'rainy'
+if report >= 200 and report < 300: weather='thunderstorm'
+elif report >= 300 and report < 600: weather='rain'
+elif report >= 600 and report < 700: weather='snow'
+elif report >= 700 and report < 800: weather='fog'
+elif (report == 800 or report == 801) and totd == 'day': weather='clear'
+elif (report == 800 or report == 801) and totd != 'day': weather='clear_night'
+else: weather='clouds'
 
 # set background
 import ctypes
-ctypes.windll.user32.SystemParametersInfoW(20, 0, path_to_photos + season + '/' +  totd + '/' + weather + '.jpg' , 0)
+ctypes.windll.user32.SystemParametersInfoW(20, 0, path_to_photos + '/' + weather + '.jpg' , 0)
