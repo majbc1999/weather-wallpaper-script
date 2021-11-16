@@ -1,4 +1,4 @@
-# Desktop background on Windows 10, based on current weather and time
+# Desktop background wallpaper, based on current weather and time
 A python script that changes your computer's desktop background based on current weather and time of the day. The weather is obtained from `https://openweathermap.org/` API.
 
 ## Steps
